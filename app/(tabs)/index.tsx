@@ -1,15 +1,74 @@
-import { Planet } from '@/components/planet';
+import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
+import Animated, { Easing, useAnimatedProps, useSharedValue, withRepeat, withSequence, withTiming } from 'react-native-reanimated';
+import { Path, Svg } from 'react-native-svg';
+
+const AnimatedPath = Animated.createAnimatedComponent(Path);
+
+export default function SvgAnimatedPath() {
+  const r = useSharedValue(90);
+
+  // 90 => 900 (flat) => 90 (curve)
+
+  const animatedProps = useAnimatedProps(() => {
+    const radius = r.value
+    return {
+     
+       d: `M 10 100 
+           A ${radius} 90 0 0 1 190 100
+            A ${radius} 90 0 0 1 10 100`
+  
+
+    };
+  });
 
 
-export default function Solar() {
+  // circle:
+  //   M 100 10
+  //   A 90 90 0 1 1 100 190
+  //   A 90 90 0 1 1 100 10
+  // 
+
+
+
+  
+
+  useEffect(() => {
+    r.value = withRepeat(
+      withSequence(
+        withTiming(90, {
+          duration: 2000,
+          easing: Easing.inOut(Easing.ease),
+        }),
+ 
+      ),
+      -1
+    );
+  }, []);
+
+
+
+  // d="
+  // M cx cy / coordinates of the center of the circle
+  // m r, 
+  // a r,r 0 1,0 -(r * 2),0 / arc 1
+  // a r,r 0 1,0  (r * 2),0 / arc 2
+  // "
+
   return (
     <View style={styles.container}>
-      <Planet symbol="☉" color="yellow" distance={0} size={1} />
-      <Planet symbol="☿" color="#8c8a89" distance={0.38} size={0.38} orbitSpeed={1.6} spinSpeed={0.5} />
-      <Planet symbol="♀" color="#dab292" distance={0.72} size={0.7} orbitSpeed={1.175} spinSpeed={1.6} />
-      <Planet symbol="⨁" color="#6287a7" distance={1} size={1} orbitSpeed={1} spinSpeed={1} />
-      <Planet symbol="♂" color="#f17b5f" distance={1.52} size={0.5} orbitSpeed={0.8} spinSpeed={1.8} />
+      {/* <Pressable onPress={handleRadiusChange} style={styles.button}>
+        <Text style={styles.buttonText}>Change Radius</Text>
+      </Pressable> */}
+      <Svg viewBox="0 0 200 200">
+        <AnimatedPath
+          animatedProps={animatedProps}
+          stroke="indianred"
+          strokeWidth={2}
+          fill="none"
+        />
+      </Svg>
+      
     </View>
   );
 }
@@ -20,6 +79,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%',
-    backgroundColor: '#000',
+    width: '100%',
+    flex: 1,
+    backgroundColor: 'black',
+  },
+
+  text : {
+    color: 'indianred',
+    fontSize: 20,
+    marginTop: 80,
+  },
+
+  button: {
+    backgroundColor: 'indianred',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 80,
+  },
+
+  buttonText: {
+    color: 'white',
   },
 });
