@@ -23,7 +23,7 @@ export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1, 
 
     const progress = useSharedValue(0);
     const spinProgress = useSharedValue(0);
- 
+
     const planetSize = EARTH_SIZE * size;
     const planetOrbitSpeed = EARTH_ORBIT_SPEED * orbitSpeed;
     const planetSpinSpeed = EARTH_SPIN_SPEED * spinSpeed;
@@ -52,7 +52,7 @@ export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1, 
         );
     }, [planetSpinSpeed]);
 
-    
+
     const planetStyle = useMemo(() => {
         return {
             backgroundColor: color,
@@ -80,7 +80,7 @@ export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1, 
     const animatedStyle = useAnimatedStyle(() => {
         const angle = progress.value * 2 * Math.PI;
         const spinAngle = spinProgress.value * 2 * Math.PI;
-        
+
         const cosAngle = Math.cos(angle);
         const sinAngle = Math.sin(angle);
 
