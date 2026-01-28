@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
-import { Easing, StyleSheet, Text, View } from 'react-native';
-import Animated, { useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
+import { Easing, StyleSheet, Text } from 'react-native';
+import Animated, { useAnimatedRef, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
 
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
@@ -20,6 +20,7 @@ interface PlanetProps {
 }
 
 export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1, spinSpeed = 1 }: PlanetProps) => {
+    const ref = useAnimatedRef()
 
     const progress = useSharedValue(0);
     const spinProgress = useSharedValue(0);
@@ -70,7 +71,6 @@ export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1, 
         };
     }, [color, distanceFromSun]);
 
-
     // 0 deg: [1, 0, 0, 1, 0, 0]
     // 90 deg: [0, 1, -1, 0, 0, 0]
     // 180 deg: [-1, 0, 0, -1, 0, 0]
@@ -78,6 +78,7 @@ export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1, 
     // 360 deg: [1, 0, 0, 1, 0, 0]
 
     const animatedStyle = useAnimatedStyle(() => {
+
         const angle = progress.value * 2 * Math.PI;
         const spinAngle = spinProgress.value * 2 * Math.PI;
 
@@ -92,15 +93,19 @@ export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1, 
         const y = sinAngle * distanceFromSun;
         return {
             transform: [
-                { translateX: x },
-                { translateY: y },
-                { matrix: [cosSpinAngle, sinSpinAngle, -sinSpinAngle, cosSpinAngle, 0, 0] },
-            ],
+                {
+                    matrix: [
+                        cosSpinAngle, sinSpinAngle, 0,
+                        -sinSpinAngle, cosSpinAngle, 0,
+                        x, y, 1
+                    ]
+                }
+            ]
         };
     });
 
     return <>
-        <View style={[styles.orbit, orbitStyle]} />
+        <Animated.View style={[styles.orbit, orbitStyle]} ref={ref} />
         <AnimatedText style={[styles.planet, planetStyle, animatedStyle]}>
             {symbol}
         </AnimatedText>
