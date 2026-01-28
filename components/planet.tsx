@@ -4,9 +4,9 @@ import Animated, { useAnimatedStyle, useSharedValue, withRepeat, withTiming } fr
 
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
-
 const EARTH_ORBIT_SPEED = 4000;
-const EARTH_SIZE = 80;
+const EARTH_SPIN_SPEED = 4000;
+const EARTH_SIZE = 90;
 const EARTH_DISTANCE = 300;
 
 
@@ -16,36 +16,43 @@ interface PlanetProps {
     distance?: number;
     size?: number;
     orbitSpeed?: number;
+    spinSpeed?: number;
 }
 
-export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1 }: PlanetProps) => {
+export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1, spinSpeed = 1 }: PlanetProps) => {
 
     const progress = useSharedValue(0);
-
-
-    // 0 deg: [1, 0, 0, 1, 0, 0]
-    // 90 deg: [0, 1, -1, 0, 0, 0]
-    // 180 deg: [-1, 0, 0, -1, 0, 0]
-    // 270 deg: [0, -1, 1, 0, 0, 0]
-    // 360 deg: [1, 0, 0, 1, 0, 0]
-
-
+    const spinProgress = useSharedValue(0);
+ 
     const planetSize = EARTH_SIZE * size;
-    const duration = EARTH_ORBIT_SPEED * orbitSpeed;
+    const planetOrbitSpeed = EARTH_ORBIT_SPEED * orbitSpeed;
+    const planetSpinSpeed = EARTH_SPIN_SPEED * spinSpeed;
     const distanceFromSun = EARTH_DISTANCE * distance;
 
 
     useEffect(() => {
         progress.value = withRepeat(
             withTiming(1, {
-                duration,
+                duration: planetOrbitSpeed,
                 easing: Easing.linear,
             }),
             -1,
             false
         );
-    }, []);
+    }, [planetOrbitSpeed]);
 
+    useEffect(() => {
+        spinProgress.value = withRepeat(
+            withTiming(1, {
+                duration: planetSpinSpeed,
+                easing: Easing.linear,
+            }),
+            -1,
+            false
+        );
+    }, [planetSpinSpeed]);
+
+    
     const planetStyle = useMemo(() => {
         return {
             backgroundColor: color,
@@ -63,30 +70,37 @@ export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1 }
         };
     }, [color, distanceFromSun]);
 
+
+    // 0 deg: [1, 0, 0, 1, 0, 0]
+    // 90 deg: [0, 1, -1, 0, 0, 0]
+    // 180 deg: [-1, 0, 0, -1, 0, 0]
+    // 270 deg: [0, -1, 1, 0, 0, 0]
+    // 360 deg: [1, 0, 0, 1, 0, 0]
+
     const animatedStyle = useAnimatedStyle(() => {
         const angle = progress.value * 2 * Math.PI;
+        const spinAngle = spinProgress.value * 2 * Math.PI;
+        
+        const cosAngle = Math.cos(angle);
+        const sinAngle = Math.sin(angle);
 
-        const cos = Math.cos(angle);
-        const sin = Math.sin(angle);
+        const cosSpinAngle = Math.cos(spinAngle);
+        const sinSpinAngle = Math.sin(spinAngle);
 
-        const x = cos * distanceFromSun;
-        const y = sin * distanceFromSun;
 
+        const x = cosAngle * distanceFromSun;
+        const y = sinAngle * distanceFromSun;
         return {
             transform: [
                 { translateX: x },
                 { translateY: y },
-                { matrix: [cos, sin, -sin, cos, 0, 0] },
+                { matrix: [cosSpinAngle, sinSpinAngle, -sinSpinAngle, cosSpinAngle, 0, 0] },
             ],
         };
     });
 
-
-
-
-
     return <>
-        <View style={[styles.orbit, orbitStyle]}></View>
+        <View style={[styles.orbit, orbitStyle]} />
         <AnimatedText style={[styles.planet, planetStyle, animatedStyle]}>
             {symbol}
         </AnimatedText>
@@ -104,19 +118,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         transformOrigin: 'center',
-        backgroundColor: 'red',
     },
     orbit: {
         position: 'absolute',
         borderRadius: '50%',
         borderWidth: 1,
-        opacity: 0.5,
-
+        opacity: 0.8,
     },
-
-    planetContent: {
-        transformOrigin: 'center',
-        position: 'absolute',
-        backgroundColor: 'indianred',
-    }
 });
