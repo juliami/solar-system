@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { Easing, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Animated, {
+  Easing,
   useAnimatedProps,
   useSharedValue,
   withRepeat,
