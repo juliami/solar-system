@@ -1,73 +1,14 @@
-import { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
-import Animated, { Easing, useAnimatedProps, useSharedValue, withRepeat, withSequence, withTiming } from 'react-native-reanimated';
-import { Path, Svg } from 'react-native-svg';
+import { StyleSheet, Text, View } from 'react-native';
 
-const AnimatedPath = Animated.createAnimatedComponent(Path);
+export default function Index() {
 
-export default function SvgAnimatedPath() {
-  const r = useSharedValue(90);
-
-  // 90 => 900 (flat) => 90 (curve)
-
-  const animatedProps = useAnimatedProps(() => {
-    const radius = r.value
-    return {
-     
-       d: `M 10 100 
-           A ${radius} 90 0 0 1 190 100
-            A ${radius} 90 0 0 1 10 100`
-  
-
-    };
-  });
-
-
-  // circle:
-  //   M 100 10
-  //   A 90 90 0 1 1 100 190
-  //   A 90 90 0 1 1 100 10
-  // 
-
-
-
-  
-
-  useEffect(() => {
-    r.value = withRepeat(
-      withSequence(
-        withTiming(90, {
-          duration: 2000,
-          easing: Easing.inOut(Easing.ease),
-        }),
- 
-      ),
-      -1
-    );
-  }, []);
-
-
-
-  // d="
-  // M cx cy / coordinates of the center of the circle
-  // m r, 
-  // a r,r 0 1,0 -(r * 2),0 / arc 1
-  // a r,r 0 1,0  (r * 2),0 / arc 2
-  // "
 
   return (
     <View style={styles.container}>
-      {/* <Pressable onPress={handleRadiusChange} style={styles.button}>
-        <Text style={styles.buttonText}>Change Radius</Text>
-      </Pressable> */}
-      <Svg viewBox="0 0 200 200">
-        <AnimatedPath
-          animatedProps={animatedProps}
-          stroke="indianred"
-          strokeWidth={2}
-          fill="none"
-        />
-      </Svg>
+     <Text
+     >
+      Hello
+     </Text>
       
     </View>
   );
@@ -87,13 +28,6 @@ const styles = StyleSheet.create({
   text : {
     color: 'indianred',
     fontSize: 20,
-    marginTop: 80,
-  },
-
-  button: {
-    backgroundColor: 'indianred',
-    padding: 10,
-    borderRadius: 5,
     marginTop: 80,
   },
 

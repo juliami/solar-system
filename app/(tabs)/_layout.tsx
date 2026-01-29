@@ -24,10 +24,28 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="arc"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Arc',
+        }}
+      />
+      <Tabs.Screen
+        name="bezier"
+        options={{
+          title: 'Bezier',
+        }}
+      />
+
+      <Tabs.Screen
+        name="arcdash"
+        options={{
+          title: 'ArcDash',
+        }}
+      />
+      <Tabs.Screen
+        name="line"
+        options={{
+          title: 'Interpolate',
         }}
       />
     </Tabs>
