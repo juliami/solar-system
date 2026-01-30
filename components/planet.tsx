@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
-import { Easing, StyleSheet, Text } from 'react-native';
-import Animated, { useAnimatedRef, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
+import { StyleSheet, Text } from 'react-native';
+import Animated, { Easing, useAnimatedRef, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
 
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         borderRadius: 9999, // Large number for circular shape
         display: 'flex',
+        transformOrigin: 'center',  
         alignItems: 'center',
         justifyContent: 'center',
     },
