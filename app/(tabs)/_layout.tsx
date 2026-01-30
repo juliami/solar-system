@@ -37,9 +37,9 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="arcdash"
+        name="dasharray"
         options={{
-          title: 'ArcDash',
+          title: 'Dash array',
         }}
       />
       <Tabs.Screen

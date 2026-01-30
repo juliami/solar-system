@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Animated, { Easing, useAnimatedProps, useSharedValue, withDelay, withSequence, withTiming } from 'react-native-reanimated';
+import Animated, { Easing, useAnimatedProps, useSharedValue, withRepeat, withSequence, withTiming } from 'react-native-reanimated';
 import { Circle, Line, Svg } from 'react-native-svg';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
@@ -12,7 +12,7 @@ const y1 = 150;
 
 export default function SvgAnimatedPath() {
   const circleRadius = 100;
-  const circumference = 2 * Math.PI * circleRadius; // ≈ 628
+  const circumference = 2 * Math.PI * circleRadius;
   
   
   const dashOffset = useSharedValue(0);
@@ -36,20 +36,27 @@ export default function SvgAnimatedPath() {
 
   
   useEffect(() => {
-    dashOffset.value = 
+    dashOffset.value = withRepeat(
       withSequence(
-        withTiming(0, { duration: 500 }), // Hold full circle
-        withTiming(circumference, { // Erase circle
-          duration: 2000,
-        }),
+        withTiming(circumference, { duration: 800, easing: Easing.inOut(Easing.ease) }),
+        withTiming(circumference, { duration: 1000 }), 
+        withTiming(0, { duration: 800, easing: Easing.inOut(Easing.ease) }), 
       ),
-    
-
-    lineX2.value = withDelay(2200, 
-      withTiming(50, { duration: 1000, easing: Easing.in(Easing.ease) }),
+      -1, 
+      false
     );
-  
-  }, []);
+
+    lineX2.value = withRepeat(
+      withSequence(
+        withTiming(x1, { duration: 800 }), 
+        withTiming(50, { duration: 500, easing: Easing.inOut(Easing.ease) }),
+        withTiming(x1, { duration: 500, easing: Easing.inOut(Easing.ease) }), 
+        withTiming(x1, { duration: 800 }),
+      ),
+      -1,
+      false
+    );
+  }, [circumference]);
 
 
   return (
@@ -58,7 +65,7 @@ export default function SvgAnimatedPath() {
         <AnimatedCircle
           animatedProps={animatedPropsCircle}
           stroke="lightgreen"
-          strokeWidth={2}
+          strokeWidth={8}
           strokeDasharray={circumference}
           fill="none"
           cx="150" 
@@ -67,9 +74,9 @@ export default function SvgAnimatedPath() {
         />
         <AnimatedLine
           stroke="lightgreen"
-          strokeWidth={2}
-          x1={250} y1={150} x2={50} y2={150}
+          strokeWidth={8}
           fill="none"
+          strokeLinecap={'round'}
           animatedProps={animatedPropsLine}
         />
       </Svg>

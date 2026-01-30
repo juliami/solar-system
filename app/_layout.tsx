@@ -18,7 +18,7 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="arc" options={{ headerShown: false }} />
         <Stack.Screen name="bezier" options={{ headerShown: false }} />
-        <Stack.Screen name="arcdash" options={{ headerShown: false }} />
+        <Stack.Screen name="dasharray" options={{ headerShown: false }} />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
