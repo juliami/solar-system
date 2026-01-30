@@ -16,10 +16,12 @@ export default function Solar() {
 
 const styles = StyleSheet.create({
   container: {
+    position: 'relative',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%',
+    width: '100%',
     backgroundColor: '#000',
   },
 });

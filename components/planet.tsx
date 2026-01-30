@@ -78,28 +78,26 @@ export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1, 
     // 360 deg: [1, 0, 0, 1, 0, 0]
 
     const animatedStyle = useAnimatedStyle(() => {
-
         const angle = progress.value * 2 * Math.PI;
         const spinAngle = spinProgress.value * 2 * Math.PI;
 
-        const cosAngle = Math.cos(angle);
-        const sinAngle = Math.sin(angle);
-
-        const cosSpinAngle = Math.cos(spinAngle);
-        const sinSpinAngle = Math.sin(spinAngle);
-
-
-        const x = cosAngle * distanceFromSun;
-        const y = sinAngle * distanceFromSun;
+        const x = Math.cos(angle) * distanceFromSun;
+        const y = Math.sin(angle) * distanceFromSun;
+        
+        // Rotation matrix components
+        const cos = Math.cos(spinAngle);
+        const sin = Math.sin(spinAngle);
+        
+        // Combined rotation + translation matrix (4x4)
+        // [cos,  sin, 0, 0]
+        // [-sin, cos, 0, 0]
+        // [0,    0,   1, 0]
+        // [x,    y,   0, 1]
         return {
             transform: [
-                {
-                    matrix: [
-                        cosSpinAngle, sinSpinAngle, 0,
-                        -sinSpinAngle, cosSpinAngle, 0,
-                        x, y, 1
-                    ]
-                }
+                { translateX: x },
+                { translateY: y },
+                { rotate: `${spinAngle}rad` }
             ]
         };
     });
@@ -118,15 +116,14 @@ const styles = StyleSheet.create({
     planet: {
         fontSize: 20,
         position: 'absolute',
-        borderRadius: '50%',
+        borderRadius: 9999, // Large number for circular shape
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        transformOrigin: 'center',
     },
     orbit: {
         position: 'absolute',
-        borderRadius: '50%',
+        borderRadius: 9999, // Large number for circular shape
         borderWidth: 1,
         opacity: 0.8,
     },
