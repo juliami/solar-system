@@ -27,7 +27,6 @@ export default function TabLayout() {
         name="bounce"
         options={{
           title: 'Bounce',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />
         }} />
       <Tabs.Screen
         name="bouncedecay"
@@ -49,7 +48,7 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="dasharray"
+        name="arcdash"
         options={{
           title: 'Dash array',
         }}

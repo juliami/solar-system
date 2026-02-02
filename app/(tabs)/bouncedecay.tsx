@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%',
+    backgroundColor: 'black',
   },
   circle: {
     height: 120,
