@@ -83,16 +83,8 @@ export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1, 
 
         const x = Math.cos(angle) * distanceFromSun;
         const y = Math.sin(angle) * distanceFromSun;
-        
-        // Rotation matrix components
-        const cos = Math.cos(spinAngle);
-        const sin = Math.sin(spinAngle);
-        
-        // Combined rotation + translation matrix (4x4)
-        // [cos,  sin, 0, 0]
-        // [-sin, cos, 0, 0]
-        // [0,    0,   1, 0]
-        // [x,    y,   0, 1]
+
+
         return {
             transform: [
                 { translateX: x },
@@ -121,6 +113,7 @@ const styles = StyleSheet.create({
         transformOrigin: 'center',  
         alignItems: 'center',
         justifyContent: 'center',
+        textAlign: 'center',
     },
     orbit: {
         position: 'absolute',

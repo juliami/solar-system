@@ -27,7 +27,31 @@ export default function TabLayout() {
         name="bounce"
         options={{
           title: 'Bounce',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />
+        }} />
+      <Tabs.Screen
+        name="arc"
+        options={{
+          title: 'Arc',
+        }}
+      />
+      <Tabs.Screen
+        name="bezier"
+        options={{
+          title: 'Bezier',
+        }}
+      />
+
+      <Tabs.Screen
+        name="dasharray"
+        options={{
+          title: 'Dash array',
+        }}
+      />
+      <Tabs.Screen
+        name="line"
+        options={{
+          title: 'Interpolate',
         }}
       />
     </Tabs>
