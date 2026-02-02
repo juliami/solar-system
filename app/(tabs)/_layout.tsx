@@ -17,6 +17,12 @@ export default function TabLayout() {
         tabBarButton: HapticTab,
       }}>
       <Tabs.Screen
+        name="perspective"
+        options={{
+          title: 'Perspective',
+        }}
+      />
+      <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
@@ -59,6 +65,7 @@ export default function TabLayout() {
           title: 'Interpolate',
         }}
       />
+  
     </Tabs>
   );
 }
