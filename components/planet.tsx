@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         borderRadius: 9999, // Large number for circular shape
         display: 'flex',
+        transformOrigin: 'center',  
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
