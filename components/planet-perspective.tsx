@@ -83,12 +83,11 @@ export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1, 
         const x = Math.cos(angle) * distanceFromSun;
         const y = Math.sin(angle) * distanceFromSun;
         
-        // Apply 3D perspective scaling based on depth
-        // When sin(angle) > 0 (top half), planet is closer (larger)
-        // When sin(angle) < 0 (bottom half), planet is farther away (smaller)
         const depthScale = 1 + Math.sin(angle) * 0.4;
+        const zIndex = Math.round(10 + Math.sin(angle) * 9);
 
         return {
+            zIndex,
             transform: [
                 { perspective: 1000 },
                 { rotateX: '70deg' },
@@ -113,7 +112,7 @@ export const StaticPlanet = ({  color, distance = 1, size = 1 }: PlanetProps) =>
     const planetSize = EARTH_SIZE * size;
     
     return (
-        <View style={[styles.planet, { height: planetSize, width: planetSize }]}>
+        <View style={[styles.planet, { height: planetSize, width: planetSize, zIndex: 10 }]}>
             <SvgPlanet color={color} />
         </View>
     );
