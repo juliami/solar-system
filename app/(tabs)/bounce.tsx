@@ -47,9 +47,8 @@ export default function App() {
       contextY.value = offsetY.value;
     })
     .onChange((event) => {
-      // Update position directly during drag
-      offsetX.value = Math.max(minX, Math.min(maxX, event.translationX));
-      offsetY.value = Math.max(minY, Math.min(maxY, event.translationY))  ;
+      offsetX.value = Math.max(minX, Math.min(maxX, contextX.value + event.translationX));
+      offsetY.value = Math.max(minY, Math.min(maxY, contextY.value + event.translationY));
     })
     .onFinalize((event) => {
       isActive.value = false;
