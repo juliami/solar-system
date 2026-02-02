@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
-import { Easing, StyleSheet, Text } from 'react-native';
-import Animated, { useAnimatedRef, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
+import { StyleSheet, Text } from 'react-native';
+import Animated, { Easing, useAnimatedRef, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
 
 const AnimatedText = Animated.createAnimatedComponent(Text);
 
@@ -83,16 +83,8 @@ export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1, 
 
         const x = Math.cos(angle) * distanceFromSun;
         const y = Math.sin(angle) * distanceFromSun;
-        
-        // Rotation matrix components
-        const cos = Math.cos(spinAngle);
-        const sin = Math.sin(spinAngle);
-        
-        // Combined rotation + translation matrix (4x4)
-        // [cos,  sin, 0, 0]
-        // [-sin, cos, 0, 0]
-        // [0,    0,   1, 0]
-        // [x,    y,   0, 1]
+
+
         return {
             transform: [
                 { translateX: x },
@@ -120,6 +112,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        textAlign: 'center',
     },
     orbit: {
         position: 'absolute',
