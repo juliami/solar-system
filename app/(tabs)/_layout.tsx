@@ -30,6 +30,12 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />
         }} />
       <Tabs.Screen
+        name="bouncedecay"
+        options={{
+          title: 'BounceDecay',
+        }} 
+        />
+      <Tabs.Screen
         name="arc"
         options={{
           title: 'Arc',

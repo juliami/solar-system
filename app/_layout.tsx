@@ -16,6 +16,8 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="bounce_decay" options={{ headerShown: false }} />
+
         <Stack.Screen name="arc" options={{ headerShown: false }} />
         <Stack.Screen name="bezier" options={{ headerShown: false }} />
         <Stack.Screen name="dasharray" options={{ headerShown: false }} />
