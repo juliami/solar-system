@@ -6,7 +6,10 @@ An interactive React Native app showcasing advanced animation techniques and a 3
 **Built with:** React Native • Expo Router • Reanimated • SVG
 
 
-<img width="350" height="718" alt="image" src="https://github.com/user-attachments/assets/727004fc-9a26-4d73-a299-63aeb1586300" />
+
+https://github.com/user-attachments/assets/bd9106dd-8393-4e1d-b37e-02e3b9ddd5aa
+
+
 
 ## Get started
 
