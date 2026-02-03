@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import Animated, { Easing, useAnimatedRef, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
 import SvgPlanet from './svg-planet';
 
-const AnimatedView = Animated.createAnimatedComponent(View);
 
 const EARTH_ORBIT_SPEED = 4000;
 const EARTH_SPIN_SPEED = 4000;
@@ -70,7 +69,7 @@ export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1, 
         const x = Math.cos(angle) * distanceFromSun;
         const y = sinAngle * distanceFromSun;
 
-        const depthScale = 1 + sinAngle * 0.4;
+        const depthScale = 1 + sinAngle * 0.2;
         const zIndex = Math.round(10 + sinAngle * 9);
 
         return {
@@ -88,9 +87,9 @@ export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1, 
 
     return <>
         <Animated.View style={[styles.orbit, orbitStyle]} ref={ref} />
-        <AnimatedView style={[styles.planet, planetStyle, animatedStyle]}>
+        <Animated.View style={[styles.planet, planetStyle, animatedStyle]}>
             <SvgPlanet color={color} />
-        </AnimatedView>
+        </Animated.View>
     </>
 };
 
@@ -112,7 +111,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
-        transform: [{ perspective: 1000 }],
     },
 
     orbit: {
