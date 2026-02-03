@@ -1,6 +1,12 @@
-# Welcome to your Expo app 👋
+# Solar system (and other animations)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+
+An interactive React Native app showcasing advanced animation techniques and a 3D solar system visualization. Features include orbital mechanics with perspective transforms, parallax starfield backgrounds, and various animation demos (bounce, arc, bezier curves, and interpolations) built with Reanimated and SVG.
+
+**Built with:** React Native • Expo Router • Reanimated • SVG
+
+
+<img width="350" height="718" alt="image" src="https://github.com/user-attachments/assets/727004fc-9a26-4d73-a299-63aeb1586300" />
 
 ## Get started
 
