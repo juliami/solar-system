@@ -1,9 +1,8 @@
 import { useEffect, useMemo } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Animated, { Easing, useAnimatedRef, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
 import SvgPlanet from './svg-planet';
 
-const AnimatedText = Animated.createAnimatedComponent(Text);
 const AnimatedView = Animated.createAnimatedComponent(View);
 
 const EARTH_ORBIT_SPEED = 4000;
@@ -27,7 +26,6 @@ export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1, 
     const ref = useAnimatedRef()
 
     const progress = useSharedValue(0);
-    const spinProgress = useSharedValue(0);
 
     const planetSize = EARTH_SIZE * size;
     const planetOrbitSpeed = EARTH_ORBIT_SPEED * orbitSpeed;
@@ -45,17 +43,6 @@ export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1, 
             false
         );
     }, [planetOrbitSpeed]);
-
-    useEffect(() => {
-        spinProgress.value = withRepeat(
-            withTiming(1, {
-                duration: planetSpinSpeed,
-                easing: Easing.linear,
-            }),
-            -1,
-            false
-        );
-    }, [planetSpinSpeed]);
 
 
     const planetStyle = useMemo(() => {
@@ -78,13 +65,13 @@ export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1, 
 
     const animatedStyle = useAnimatedStyle(() => {
         const angle = progress.value * 2 * Math.PI;
-        const spinAngle = spinProgress.value * 2 * Math.PI;
+        const sinAngle = Math.sin(angle);
 
         const x = Math.cos(angle) * distanceFromSun;
-        const y = Math.sin(angle) * distanceFromSun;
-        
-        const depthScale = 1 + Math.sin(angle) * 0.4;
-        const zIndex = Math.round(10 + Math.sin(angle) * 9);
+        const y = sinAngle * distanceFromSun;
+
+        const depthScale = 1 + sinAngle * 0.4;
+        const zIndex = Math.round(10 + sinAngle * 9);
 
         return {
             zIndex,
@@ -94,7 +81,6 @@ export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1, 
                 { translateX: x },
                 { translateY: y },
                 { rotateX: '-70deg' },
-                { rotate: `${spinAngle}rad` },
                 { scale: depthScale },
             ]
         };
@@ -108,29 +94,30 @@ export const Planet = ({ symbol, color, distance = 1, size = 1, orbitSpeed = 1, 
     </>
 };
 
-export const StaticPlanet = ({  color, distance = 1, size = 1 }: PlanetProps) => {
+export const StaticPlanet = ({ color, distance = 1, size = 1 }: PlanetProps) => {
     const planetSize = EARTH_SIZE * size;
-    
+
     return (
         <View style={[styles.planet, { height: planetSize, width: planetSize, zIndex: 10 }]}>
             <SvgPlanet color={color} />
         </View>
     );
-};  
+};
 
 const styles = StyleSheet.create({
     planet: {
         position: 'absolute',
-        borderRadius: 9999, // Large number for circular shape
-        transformOrigin: 'center',  
+        borderRadius: 9999, 
+        transformOrigin: 'center',
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
+        transform: [{ perspective: 1000 }],
     },
- 
+
     orbit: {
         position: 'absolute',
-        borderRadius: 9999, // Large number for circular shape
+        borderRadius: 9999,
         borderWidth: 1,
         opacity: 0.8,
         transform: [{ perspective: 1000 }, { rotateX: '70deg' }],
