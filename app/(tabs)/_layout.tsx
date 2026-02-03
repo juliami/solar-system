@@ -11,11 +11,18 @@ export default function TabLayout() {
 
   return (
     <Tabs
+      initialRouteName="perspective"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
         tabBarButton: HapticTab,
       }}>
+      <Tabs.Screen
+        name="perspective"
+        options={{
+          title: 'Perspective',
+        }}
+      />
       <Tabs.Screen
         name="index"
         options={{
@@ -59,6 +66,7 @@ export default function TabLayout() {
           title: 'Interpolate',
         }}
       />
+  
     </Tabs>
   );
 }
